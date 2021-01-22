@@ -4,36 +4,30 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     devtool: 'source-map',
-    entry: './src/index.js',
+    entry: './src/index.tsx',
+    target: "web",
+    mode: "development",
     output: {
-        path: path.join(__dirname, "/dist"),
-        filename: "index_bundle.js",
+        path: path.resolve(__dirname, "build"),
+        filename: "bundle.js",
     },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: 'css/style.css',
-        }),
-        new HtmlWebPackPlugin({
-            hash: true,
-            template: "./src/index.html", //source
-            filename: "index.html", // target
-        })
-    ],
+    resolve: {
+        extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
+    },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-react']
-                    }
-                }
+                test: /\.(ts|tsx)$/,
+                loader: 'awesome-typescript-loader',
             },
             {
-                test: /\.css$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader']
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader",
+            },
+            {
+                test: /\.css$/,
+                loader: "css-loader",
             },
             {
                 test: /\.(png|jpg|gif)$/,
@@ -44,5 +38,15 @@ module.exports = {
                 ]
             },
         ]
-    }
+    },
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/style.css',
+        }),
+        new HtmlWebPackPlugin({
+            hash: true,
+            template: path.resolve(__dirname, "src", "index.html"), //source
+            filename: "index.html", // target
+        })
+    ],
 }
