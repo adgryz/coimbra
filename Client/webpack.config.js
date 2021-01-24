@@ -12,6 +12,11 @@ module.exports = {
         filename: "bundle.js",
     },
     resolve: {
+        alias: {
+            models: path.resolve(__dirname, 'src/models/'),
+            scenes: path.resolve(__dirname, 'src/scenes/'),
+            services: path.resolve(__dirname, 'src/services/')
+        },
         extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
     },
     module: {

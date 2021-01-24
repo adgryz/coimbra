@@ -7,9 +7,15 @@
     "start": "node_modules/.bin/webpack serve --open --hot"
   },
   "dependencies": {
+    "@types/react-router-dom": "^5.1.7",
+    "@types/recoil": "^0.0.1",
+    "@types/socket.io-client": "^1.4.35",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-hot-loader": "^4.13.0"
+    "react-hot-loader": "^4.13.0",
+    "react-router-dom": "^5.2.0",
+    "recoil": "^0.1.2",
+    "socket.io-client": "^3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
