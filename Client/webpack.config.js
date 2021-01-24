@@ -10,6 +10,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, "build"),
         filename: "bundle.js",
+        publicPath: '/'
     },
     resolve: {
         alias: {
@@ -31,8 +32,12 @@ module.exports = {
                 loader: "source-map-loader",
             },
             {
-                test: /\.css$/,
-                loader: "css-loader",
+                test: /\.scss$/, use: [
+                    { loader: "style-loader" },
+                    { loader: "css-modules-typescript-loader" },
+                    { loader: "css-loader", options: { modules: true } },
+                    { loader: "sass-loader" },
+                ]
             },
             {
                 test: /\.(png|jpg|gif)$/,
@@ -54,4 +59,7 @@ module.exports = {
             filename: "index.html", // target
         })
     ],
+    devServer: {
+        historyApiFallback: true,
+    },
 }

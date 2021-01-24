@@ -1,0 +1,26 @@
+.root{
+    margin: 30px;
+    width: 700px;
+    margin: 100px auto;
+}
+
+.topBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.greeting {
+    font-weight: bold;
+    color: teal;
+}
+
+.title {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.row {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-bottom: 1px solid teal;
+}

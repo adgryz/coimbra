@@ -1,0 +1,22 @@
+.root {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gameName {
+    font-weight: bold;
+}
+
+.rightPart {
+    display: flex;
+    align-items: center;
+}
+
+.playersNames {
+    margin-right: 8px;
+    display: flex;
+}
+
+.playersName {
+    margin-right: 4px;
+}

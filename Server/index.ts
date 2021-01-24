@@ -35,7 +35,11 @@ type JoinGameInput = {
     gameId: string;
 }
 
-const games: Game[] = [];
+type LeaveGameInput = {
+    playerId: string;
+}
+
+let games: Game[] = [];
 
 
 io.on('connection', (socket: Socket) => {
@@ -54,6 +58,25 @@ io.on('connection', (socket: Socket) => {
     socket.on('joinGame', ({ playerId, gameId }: JoinGameInput) => {
         const gameToJoin = games.find(game => game.id === gameId);
         gameToJoin?.playersIds.push(playerId)
+        io.emit('gamesUpdated', games);
+    })
+
+    socket.on('leaveGame', ({ playerId }: LeaveGameInput) => {
+        const gameToLeave = games.find(game => game.playersIds.find(id => id === playerId));
+        if (!gameToLeave) {
+            return;
+        }
+        gameToLeave.playersIds = gameToLeave?.playersIds.filter(id => id !== playerId);
+
+        console.log(playerId, gameToLeave.ownerId)
+        if (gameToLeave.playersIds.length === 0) { // Remove empty game
+            games = games.filter(game => game.id !== gameToLeave.id);
+            console.log('empty game', games)
+        } else if (playerId === gameToLeave.ownerId) { // If owner left setup new owner
+            console.log('owner leaving', games)
+            gameToLeave.ownerId = gameToLeave.playersIds[0];
+        }
+
         io.emit('gamesUpdated', games);
     })
 

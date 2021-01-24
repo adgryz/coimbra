@@ -1,0 +1,25 @@
+.root {
+    width: 500px;
+    margin: 200px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: teal;
+}
+
+.question {
+    margin-bottom: 5px;
+}
+
+.nicknameInput {
+    margin-bottom: 20px;
+}
+
+.nextButton {
+    align-self:  center;
+}
