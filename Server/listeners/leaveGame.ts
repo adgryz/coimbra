@@ -16,6 +16,7 @@ const leaveGame = (socket: Socket) => socket.on('leaveGame', ({ playerId }: Leav
         return;
     }
     gameToLeave.playersIds = gameToLeave?.playersIds.filter(id => id !== playerId);
+    gameToLeave.currentPlayersNumber--;
 
     if (gameToLeave.playersIds.length === 0) { // Remove empty game
         games = games.filter(game => game.id !== gameToLeave.id);

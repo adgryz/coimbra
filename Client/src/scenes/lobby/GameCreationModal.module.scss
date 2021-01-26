@@ -1,0 +1,24 @@
+.root {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.numberButtons {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.numberButton {
+    margin-right: 10px;
+}
+
+.createButton {
+    align-self: center;
+}

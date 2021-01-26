@@ -13,7 +13,11 @@ const joinGame = (socket: Socket) => socket.on('joinGame', ({ playerId, gameId }
     console.log(`Player ${playerId} joins ${gameId}`)
     let { games } = state;
     const gameToJoin = games.find(game => game.id === gameId);
-    gameToJoin?.playersIds.push(playerId)
+    if (!gameToJoin) {
+        return;
+    }
+    gameToJoin.playersIds.push(playerId)
+    gameToJoin.currentPlayersNumber++;
 
     events.gamesUpdated(games);
 })

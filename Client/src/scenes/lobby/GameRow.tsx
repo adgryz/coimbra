@@ -4,7 +4,7 @@ import { Button } from "@chakra-ui/react";
 import { Game } from 'models/games/types';
 import socket from 'services/socket';
 
-import styles from './gameRow.module.scss';
+import styles from './GameRow.module.scss';
 
 interface IGameRowProps {
     game: Game
@@ -29,6 +29,7 @@ const GameRow = ({ game, playerId, openModal }: IGameRowProps) => {
                         playerId => <div className={styles.playersName} key={playerId}>{playerId}</div>
                     )}
                 </div>
+                <div>{game.currentPlayersNumber} / {game.playersNumber}</div>
                 <Button colorScheme="teal" onClick={joinGame}>Join</Button>
             </div>
         </div>

@@ -7,26 +7,13 @@ import { playerNicknameState } from 'models/player/atoms';
 import { Button, Modal, useDisclosure, ModalContent, ModalOverlay } from "@chakra-ui/react";
 
 import GameRow from './GameRow';
-import GameModal from './GameModal';
-import styles from "./lobby.module.scss";
-
-const createGame = (playerId: string) => {
-    socket.emit('createGame', { playerId });
-}
+import GameCreationModal from './GameCreationModal';
+import styles from "./Lobby.module.scss";
 
 const Lobby = () => {
     const playerNickname = useRecoilValue(playerNicknameState);
     const games = useRecoilValue(gamesState);
     const { isOpen, onOpen, onClose } = useDisclosure();
-
-    const onCreate = () => {
-        createGame(playerNickname);
-        onOpen();
-    }
-
-    const onModalOpen = (gameId: string) => {
-        onOpen();
-    }
 
     const onModalClose = () => {
         socket.emit('leaveGame', { playerId: playerNickname });
@@ -37,7 +24,7 @@ const Lobby = () => {
         <div className={styles.root}>
             <div className={styles.topBar}>
                 <div className={styles.greeting}>{playerNickname} welcome to Coimbra!</div>
-                <Button colorScheme="orange" onClick={onCreate}>Create Game</Button>
+                <Button colorScheme="orange" onClick={onOpen}>Create Game</Button>
             </div>
             <div>
                 <p className={styles.title}>Games waiting for start:</p>
@@ -46,7 +33,7 @@ const Lobby = () => {
                         games.map(game => (
                             <div className={styles.row} key={game.id}>
                                 <GameRow
-                                    openModal={() => onModalOpen(game.id)}
+                                    openModal={onOpen}
                                     game={game}
                                     playerId={playerNickname} />
                             </div>
@@ -58,7 +45,7 @@ const Lobby = () => {
             <Modal isOpen={isOpen} onClose={onModalClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <GameModal />
+                    <GameCreationModal />
                 </ModalContent>
             </Modal>
         </div>
