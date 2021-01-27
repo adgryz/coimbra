@@ -9,11 +9,18 @@ import styles from './GameCreationModal.module.scss';
 
 const playersNumbers = [2, 3, 4]
 
-const GameCreationModal = () => {
+interface IGameCreationModalProps {
+    openGameRoom: () => void;
+    closeCreationModal: () => void;
+}
+
+const GameCreationModal = ({ closeCreationModal, openGameRoom }: IGameCreationModalProps) => {
     const playerNickname = useRecoilValue(playerNicknameState);
     const [playersNumber, setPlayersNumber] = React.useState<number>();
 
     const createGame = () => {
+        closeCreationModal();
+        openGameRoom();
         socket.emit('createGame', { playerId: playerNickname, playersNumber });
     }
 

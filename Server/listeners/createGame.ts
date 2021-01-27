@@ -20,6 +20,7 @@ const createGame = (socket: Socket) => {
             id: new Date().getTime().toString(),
             playersNumber,
             currentPlayersNumber: 1,
+            isInProgress: false,
         })
 
         events.gamesUpdated(games);

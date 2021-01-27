@@ -8,23 +8,27 @@ import { Button, Modal, useDisclosure, ModalContent, ModalOverlay } from "@chakr
 
 import GameRow from './GameRow';
 import GameCreationModal from './GameCreationModal';
+import GameRoomModal from './GameRoomModal';
 import styles from "./Lobby.module.scss";
 
 const Lobby = () => {
     const playerNickname = useRecoilValue(playerNicknameState);
     const games = useRecoilValue(gamesState);
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen: isGameCreationOpen, onOpen: onGameCreationOpen, onClose: onGameCreationClose } = useDisclosure()
+    const { isOpen: isGameRoomOpen, onOpen: onGameRoomOpen, onClose: onGameRoomClose } = useDisclosure()
 
-    const onModalClose = () => {
+    const handleGameRoomClose = () => {
         socket.emit('leaveGame', { playerId: playerNickname });
-        onClose();
+        onGameRoomClose();
     }
+
+    const playerGame = games.find(game => game.playersIds.includes(playerNickname))
 
     return (
         <div className={styles.root}>
             <div className={styles.topBar}>
                 <div className={styles.greeting}>{playerNickname} welcome to Coimbra!</div>
-                <Button colorScheme="orange" onClick={onOpen}>Create Game</Button>
+                <Button colorScheme="orange" onClick={onGameCreationOpen}>Create Game</Button>
             </div>
             <div>
                 <p className={styles.title}>Games waiting for start:</p>
@@ -33,7 +37,7 @@ const Lobby = () => {
                         games.map(game => (
                             <div className={styles.row} key={game.id}>
                                 <GameRow
-                                    openModal={onOpen}
+                                    openModal={onGameRoomOpen}
                                     game={game}
                                     playerId={playerNickname} />
                             </div>
@@ -42,10 +46,16 @@ const Lobby = () => {
                     }
                 </div>
             </div>
-            <Modal isOpen={isOpen} onClose={onModalClose}>
+            <Modal isOpen={isGameCreationOpen} onClose={onGameCreationClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <GameCreationModal />
+                    <GameCreationModal closeCreationModal={onGameCreationClose} openGameRoom={onGameRoomOpen} />
+                </ModalContent>
+            </Modal>
+            <Modal isOpen={isGameRoomOpen} onClose={handleGameRoomClose}>
+                <ModalOverlay />
+                <ModalContent>
+                    <GameRoomModal game={playerGame} />
                 </ModalContent>
             </Modal>
         </div>

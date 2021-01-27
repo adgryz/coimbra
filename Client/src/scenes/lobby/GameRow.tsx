@@ -30,7 +30,7 @@ const GameRow = ({ game, playerId, openModal }: IGameRowProps) => {
                     )}
                 </div>
                 <div>{game.currentPlayersNumber} / {game.playersNumber}</div>
-                <Button colorScheme="teal" onClick={joinGame}>Join</Button>
+                <Button className={styles.joinButton} colorScheme="teal" onClick={joinGame}>Join</Button>
             </div>
         </div>
     )

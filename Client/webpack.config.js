@@ -27,6 +27,11 @@ module.exports = {
                 loader: 'awesome-typescript-loader',
             },
             {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader'
+            },
+            {
                 enforce: "pre",
                 test: /\.js$/,
                 loader: "source-map-loader",

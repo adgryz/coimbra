@@ -4,6 +4,7 @@ export interface IGame {
     id: string;
     playersNumber: number;
     currentPlayersNumber: number;
+    isInProgress: boolean;
 }
 
 interface IState {
